@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProgressSoftApplication {
+public class FXDealsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ProgressSoftApplication.class, args);
+		SpringApplication.run(FXDealsApplication.class, args);
 	}
 
 }

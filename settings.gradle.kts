@@ -1,1 +1,1 @@
-rootProject.name = "deals"
+rootProject.name = "ProgressSoft"
