@@ -8,14 +8,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.money.CurrencyUnit;
 import javax.money.MonetaryAmount;
 import java.sql.Timestamp;
-import java.util.UUID;
 
 @Data
-@Document
+@Document("fxdeals")
 @AllArgsConstructor
 public class FXDeal {
     @Id
-    private UUID id;
+    private int id;
     private CurrencyUnit fromCurrency;
     private CurrencyUnit toCurrency;
     private Timestamp timestamp;
