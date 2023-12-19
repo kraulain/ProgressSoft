@@ -14,7 +14,7 @@ COPY build.gradle.kts settings.gradle.kts $APP_HOME/
 # Copy the source code to the container
 COPY src $APP_HOME/src
 
-# Run Gradle wrapper to download and install Gradle
+# Ensure that Gradle is installed
 RUN gradle --version
 
 # Build the application using Gradle

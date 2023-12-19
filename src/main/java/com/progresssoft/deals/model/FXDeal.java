@@ -1,5 +1,6 @@
 package com.progresssoft.deals.model;
 
+import com.progresssoft.deals.util.AppConstants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -10,7 +11,7 @@ import javax.money.MonetaryAmount;
 import java.sql.Timestamp;
 
 @Data
-@Document("fxdeals")
+@Document(AppConstants.MONGO_COLLECTION)
 @AllArgsConstructor
 public class FXDeal {
     @Id

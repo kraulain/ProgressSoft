@@ -18,6 +18,8 @@ services:
       MONGO_INITDB_ROOT_USERNAME: rootusername
       MONGO_INITDB_ROOT_PASSWORD: rootpassword
       MONGO_INITDB_DATABASE: stagingdb
+    ports:
+      - 27017:27017
 
   mongo-express:
     image: mongo-express:1.0.0-18
@@ -60,8 +62,6 @@ services:
       GROUP_ID: 1
       CONFIG_STORAGE_TOPIC: connect_configs
       OFFSET_STORAGE_TOPIC: connect_offsets
-      KEY_CONVERTER: io.confluent.connect.avro.AvroConverter
-      VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
       CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
     depends_on: [kafka]
@@ -78,7 +78,7 @@ services:
       - 8081:8081
     depends_on: [zookeeper, kafka]
 
-  fxdeals_service:
+  fxdeals-service:
     build: .
     restart: always
     depends_on: [mongodb, kafka]
