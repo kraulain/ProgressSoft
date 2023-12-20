@@ -1,20 +1,21 @@
 package com.progresssoft.deals.service;
 
+import com.progresssoft.deals.model.FXDeal;
 import com.progresssoft.deals.util.AppConstants;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Slf4j
+@Service
 public class FXDealConsumer {
-    private static final Logger logger = LoggerFactory.getLogger(FXDealConsumer.class);
 
     @KafkaListener(topics = AppConstants.TOPIC_NAME, groupId = AppConstants.GROUP_ID)
-    public void listen(String message) {
-        logger.info("Received message: " + message);
-        //marshall to fxdeal object
-        //validate fxdeal
-        //call mongodb persist
+    public void listen(FXDeal deal) {
+        log.info("Received message: " + deal.toString());
+
     }
 }

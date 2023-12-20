@@ -6,7 +6,7 @@ DB_NAME="sourcedb"
 DB_USER="rootusername"
 export DB_PASSWORD="rootpassword"
 
-# Create table (adjust column names and types as needed)
+# Create table fxdeal
 psql -h "$DB_HOST" -d "$DB_NAME" -U "$DB_USER" -W -c "
 CREATE TABLE IF NOT EXISTS fxdeal (
   id serial PRIMARY KEY,
@@ -24,6 +24,22 @@ else
   echo "Error creating table: $!"
   exit 1
 fi
+
+# Configure table for debezium
+psql -h "$DB_HOST" -d "$DB_NAME" -U "$DB_USER" -W -c "
+ALTER TABLE fxdeal REPLICA IDENTITY FULL;
+"
+
+# Check for successful configuration
+if [ $? -eq 0 ]; then
+  echo "Table 'fxdeal' configured for debezium!"
+else
+  echo "Error configuring table: $!"
+  exit 1
+fi
+
+#setup up debezium config for table
+curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 127.0.0.1:8083/connectors/ --data "@debezium.json"
 
 # Define possible values for random data generation
 FROM_CURRENCIES=('USD' 'EUR' 'GBP' 'JPY')

@@ -9,6 +9,7 @@
     "database.password": "rootpassword",
     "database.dbname": "sourcedb",
     "database.server.name": "postgres",
-    "table.include.list": "public.fxdeal"
+    "table.include.list": "public.fxdeal",
+    "topic.prefix": "sourcedb"
   }
 }

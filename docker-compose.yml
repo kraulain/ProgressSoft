@@ -2,6 +2,7 @@ version: "3.8"
 services:
   postgres:
     image: debezium/postgres:16
+    restart: on-failure
     ports:
       - 5432:5432
     environment:
@@ -11,6 +12,7 @@ services:
 
   mongodb:
     image: mongo:5.0.23
+    restart: on-failure
     container_name: mongodb
     volumes:
       - data:/data
@@ -24,7 +26,7 @@ services:
   mongo-express:
     image: mongo-express:1.0.0-18
     container_name: mongo-express
-    restart: always
+    restart: on-failure
     ports:
       - 8082:8081
     environment:
@@ -36,15 +38,18 @@ services:
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.3
+    restart: on-failure
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
 
   kafka:
     image: confluentinc/cp-kafka:7.4.3
+    restart: on-failure
     depends_on: [zookeeper]
     environment:
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_BROKER_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_JMX_PORT: 9991
@@ -57,6 +62,7 @@ services:
 
   debezium:
     image: debezium/connect:2.4
+    restart: on-failure
     environment:
       BOOTSTRAP_SERVERS: kafka:9092
       GROUP_ID: 1
@@ -70,6 +76,7 @@ services:
 
   schema-registry:
     image: confluentinc/cp-schema-registry:6.2.13
+    restart: on-failure
     environment:
       - SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL=zookeeper:2181
       - SCHEMA_REGISTRY_HOST_NAME=schema-registry
@@ -80,7 +87,7 @@ services:
 
   fxdeals-service:
     build: .
-    restart: always
+    restart: on-failure
     depends_on: [mongodb, kafka]
     ports:
       - 8080:8080
