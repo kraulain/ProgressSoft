@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class FXDealConsumer {
@@ -18,13 +20,20 @@ public class FXDealConsumer {
     @Autowired
     CustomDeserializer customDeserializer;
 
+    /**
+     * Listen to messages on specified kafka topic and Deserialize them before saving to mongodb
+     * @param message
+     */
     @KafkaListener(topics = AppConstants.TOPIC_NAME, groupId = AppConstants.GROUP_ID)
     public void listen(String message) {
         try {
-            FXDeal deal = customDeserializer.messageToDeal(message);
-            log.info("New fxdeal with id: " + deal.getId());
-            fxDealRepository.save(deal);
-            log.info("fxdeal with id: " + deal.getId() + "Saved to mongodb" );
+            Optional<FXDeal> deal = customDeserializer.messageToDeal(message);
+            if(deal.isPresent()){
+                log.info("New fxdeal with id: " + deal.get().getId());
+                fxDealRepository.save(deal.get());
+                log.info("fxdeal with id: " + deal.get().getId() + "Saved to mongodb" );
+            }
+
         } catch (Exception e) {
             log.error("Something went wrong when trying to save deal to mongodb. " + e.getMessage());
         }

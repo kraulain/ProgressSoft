@@ -1,6 +1,5 @@
 package com.progresssoft.deals.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.progresssoft.deals.util.AppConstants;
 import com.progresssoft.deals.util.FXDealDeserializer;
