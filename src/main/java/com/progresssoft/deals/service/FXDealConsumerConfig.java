@@ -2,6 +2,7 @@ package com.progresssoft.deals.service;
 
 import com.progresssoft.deals.model.FXDeal;
 import com.progresssoft.deals.util.AppConstants;
+import com.progresssoft.deals.util.FXDealDeserializer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -28,7 +29,8 @@ public class FXDealConsumerConfig {
         configProps.put(ConsumerConfig.GROUP_ID_CONFIG, AppConstants.GROUP_ID);
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        return new DefaultKafkaConsumerFactory<>(configProps);
+        return new DefaultKafkaConsumerFactory<>(configProps, new StringDeserializer(),
+                new JsonDeserializer<>(FXDeal.class));
     }
 
     @Bean

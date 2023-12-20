@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.progresssoft.deals.model.FXDeal;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.money.CurrencyUnit;
 import javax.money.Monetary;
 import java.sql.Timestamp;
 
