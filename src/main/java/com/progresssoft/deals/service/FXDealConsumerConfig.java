@@ -1,5 +1,6 @@
 package com.progresssoft.deals.service;
 
+import com.progresssoft.deals.model.FXDeal;
 import com.progresssoft.deals.util.AppConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -21,7 +22,7 @@ import java.util.Map;
 public class FXDealConsumerConfig {
 
     @Bean
-    public ConsumerFactory<String, String> consumerFactory() {
+    public ConsumerFactory<String, FXDeal> consumerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, AppConstants.BOOTSTRAP_SERVERS);
         configProps.put(ConsumerConfig.GROUP_ID_CONFIG, AppConstants.GROUP_ID);
@@ -31,8 +32,8 @@ public class FXDealConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, FXDeal> fxDealListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, FXDeal> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }

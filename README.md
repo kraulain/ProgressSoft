@@ -47,6 +47,8 @@ This will insert a sample deal in the postgres **sourcedb** every second.
 
 - To stop the script, you can press `Ctrl+C` in the terminal.
 
+- Processed and saved deals can be seen via the mongo-express web UI `localhost:8082`
+
 ### Unit testing
 
 The main SpringBoot application contains unit tests that could be run using gradle.
